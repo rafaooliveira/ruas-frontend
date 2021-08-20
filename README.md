@@ -1,23 +1,17 @@
 # ruas (ruas-frontend)
 
 projeto para ajudar a arte de rua
-
-## Install the dependencies
+## Após clonar é só instalar as dependencias certo ?
 ```bash
-yarn
+npm install
 ```
 
-### Start the app in development mode (hot-code reloading, error reporting, etc.)
+### Para subir local segue o comando:
 ```bash
-quasar dev
+npx quasar dev
 ```
 
-### Lint the files
-```bash
-yarn run lint
-```
-
-### Build the app for production
+### Aqui é para build, mas é só no futuro.
 ```bash
 quasar build
 ```
