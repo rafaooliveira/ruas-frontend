@@ -1,0 +1,105 @@
+<template lang="pug">
+
+q-layout(view="lHh Lpr lFf")
+    q-header(elevated)
+      q-toolbar(
+        class="bg-black text-white"
+      )
+        q-btn(
+          v-if="this.$route.path !== '/login' && this.$route.path !== '/'"
+          flat
+          dense
+          round
+          icon="menu"
+          aria-label="Menu"
+          @click="leftDrawerOpen = !leftDrawerOpen"
+        )
+        q-btn(
+					v-if="this.$route.path === '/login'"
+					round
+					icon="arrow_back"
+					:to="'/'"
+        )
+        q-toolbar-title() Arte de Rua
+        q-btn(
+					v-if="this.$route.path === '/login'"
+					label="Cadastre-se"
+          :to="'/cadastro'"
+					color="warning"
+        )
+        q-btn(
+					v-if="this.$route.path !== '/login'"
+          label="Login"
+          :to="'/login'"
+        )
+    q-drawer(
+      v-model="leftDrawerOpen"
+      bordered
+      behavior="mobile"
+      @click="leftDrawerOpen = true"
+    )
+      q-scroll-area.fit
+        q-toolbar.GPL__toolbar
+          q-toolbar-title.row.items-center.text-grey-8
+            img.absolute-center.q-my-lg(
+              src="../statics/gemeos.jpeg"
+              width="85"
+            )
+        q-separator.q-my-xl
+        q-list(
+          padding
+        )
+          q-item.item(
+            v-for="link in registers"
+            :key="link.text"
+            :to="link.to"
+            clickable
+          )
+            q-item-section(
+              avatar
+            )
+              q-icon(
+                :name="link.icon"
+              )
+            q-item-section
+              q-item-label {{ link.text }}
+    q-page-container
+        router-view
+</template>
+
+<script>
+import moment from 'moment'
+import routes from '../router/routes'
+export default {
+  name: 'MainLayout',
+  data () {
+    return {
+      m: moment,
+      leftDrawerOpen: false,
+      registers: []
+    }
+  },
+  methods: {
+    renderMenu () {
+      routes.forEach(route => {
+        switch (route.path) {
+          case '/registros':
+            route.children.forEach(child => {
+              this.registers.push({
+                icon: 'add_location',
+                text: child.name,
+                to: `${route.path}/${child.path}`
+              })
+            })
+            break
+          default:
+            break
+        }
+      })
+    }
+  },
+  async mounted () {
+    this.renderMenu()
+  }
+}
+</script>
