@@ -6,7 +6,7 @@ q-layout(view="lHh Lpr lFf")
         class="bg-black text-white"
       )
         q-btn(
-          v-if="this.$route.path !== '/login' && this.$route.path !== '/'"
+          v-if="this.$route.path !== '/login' && this.$route.path !== '/' && this.$route.path !== '/cadastro'"
           flat
           dense
           round
@@ -15,10 +15,10 @@ q-layout(view="lHh Lpr lFf")
           @click="leftDrawerOpen = !leftDrawerOpen"
         )
         q-btn(
-					v-if="this.$route.path === '/login'"
+					v-if="this.$route.path === '/login' || this.$route.path === '/cadastro'"
 					round
 					icon="arrow_back"
-					:to="'/'"
+					:to="this.$route.path === '/cadastro' ? '/login' : '/'"
         )
         q-toolbar-title() Arte de Rua
         q-btn(

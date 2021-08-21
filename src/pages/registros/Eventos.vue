@@ -4,17 +4,17 @@ div.layout-padding.flex-center.q-pa-sm
       div(
         :class="$q.platform.is.mobile ? 'col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 q-pa-md' : 'col-12'"
       )
-        Cadastro
+        CadastroEvento
 </template>
 
 <script>
 
-import Cadastro from '../../components/Eventos/Cadastro'
+import CadastroEvento from '../../components/Eventos/CadastroEvento'
 
 export default {
   name: 'Eventos',
   components: {
-    Cadastro
+    CadastroEvento
   }
 }
 </script>

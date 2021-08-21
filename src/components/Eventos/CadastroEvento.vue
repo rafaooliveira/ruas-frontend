@@ -1,32 +1,45 @@
 <template lang="pug">
-div.q-pa-sm
-	div.row.q-col-gutter-sm
-		div.col-xl-4.col-lg-4.col-md-4.col-sm-12.col-xs-12
-		q-card.q-gutter-y-sm
-			q-card-section.q-gutter-sm
-				q-select(
-					v-model="tipo"
-					:options="optionsAcao"
-					filled
-					required
-					emit-value
-					map-options
-					:rules="[val => !!val || msgCampoObr]"
-					label="Ação"
-				)
-				RIMA(
-					v-show="tipo === 'batalha' || tipo === 'danca'"
-				)
-				GRAFITE(
-					v-show="tipo === 'grafite'"
-				)
-				CRIAR(
-					:tipo="tipo"
-					:formData = "records"
-				)
-		div.col-xl-8.col-lg-8.col-md-8.col-sm-12.col-xs-12
-Map
-		//- vue-tournament-bracket-generator(:bracket-size="16")
+div.q-pa-xl
+	div.row.q-col-gutter-md
+		div.col-xl-4.col-lg-4.col-md-4.col-md-12.col-xs-12
+			q-card.q-gutter-y-md
+				q-card-section.q-gutter-md
+					q-btn(
+						icon="arrow_back"
+						round
+						:to="'/home'"
+					)
+					q-separator
+					q-select(
+						v-model="tipo"
+						:options="optionsAcao"
+						filled
+						required
+						emit-value
+						map-options
+						:rules="[val => !!val || msgCampoObr]"
+						label="Ação"
+					)
+					RIMA(
+						v-show="tipo === 'batalha' || tipo === 'danca'"
+					)
+					GRAFITE(
+						v-show="tipo === 'grafite'"
+					)
+					CRIAR(
+						:tipo="tipo"
+						:formData = "records"
+					)
+		div.row
+			div.col-xl-8.col-lg-8.col-md-8.col-sm-12.col-xs-12
+				q-card.q-gutter-y-md
+					q-card-section.q-gutter-md
+						q-input(
+							label="Teste"
+							filled
+						)
+		//- //- Map
+		//- //- vue-tournament-bracket-generator(:bracket-size="16")
 </template>
 <style scoped>
 .teste{
@@ -48,7 +61,7 @@ Notify.setDefaults({
   actions: [{ icon: 'close', color: 'white' }]
 })
 export default {
-  name: 'Cadastro',
+  name: 'CadastroEvento',
   components: {
     Map,
     CRIAR,
