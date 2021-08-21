@@ -119,12 +119,6 @@ export default {
     async login () {
       this.loading = true
       this.disable = true
-      // const formdata = new URLSearchParams()
-      // formdata.append('email', this.email)
-      // formdata.append('password', this.password)
-	  	// console.log("formdata", formdata);
-			// console.log("email", this)
-      // console.log("pass", this.$refs)
 
 			if (this.$refs.email.validate() && this.$refs.password.validate()) {
 				try {

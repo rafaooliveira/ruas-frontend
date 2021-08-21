@@ -28,7 +28,7 @@ q-layout(view="lHh Lpr lFf")
 					color="warning"
         )
         q-btn(
-					v-if="this.$route.path !== '/login'"
+					v-if="this.$route.path === '/'"
           label="Login"
           :to="'/login'"
         )
