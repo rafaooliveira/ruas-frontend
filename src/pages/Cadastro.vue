@@ -1,6 +1,5 @@
 <template lang="pug">
-div
-	p oi
+p lais
 </template>
 
 <script>

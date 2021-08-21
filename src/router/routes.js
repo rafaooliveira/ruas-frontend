@@ -13,10 +13,15 @@ const routes = [
         component: () => import('pages/Login.vue'),
         name: 'Login'
       },
-	  {
+	  	{
         path: 'home',
         component: () => import('pages/Home.vue'),
         name: 'Home'
+      },
+			{
+        path: 'cadastro',
+        component: () => import('pages/Cadastro.vue'),
+        name: 'Cadastro'
       }
     ]
   },
