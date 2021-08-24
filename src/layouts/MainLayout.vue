@@ -27,11 +27,41 @@ q-layout(view="lHh Lpr lFf")
           :to="'/cadastro'"
 					color="warning"
         )
-        q-btn(
-					v-if="this.$route.path === '/'"
-          label="Login"
-          :to="'/login'"
-        )
+        div
+          q-btn(
+						v-if="this.$route.path === '/'"
+						label="Login"
+						:to="'/login'"
+					)
+          q-btn(
+						v-if="this.$route.path === '/home'"
+						label="Perfil"
+					)
+            q-menu
+              div.row.no-wrap.q-pa-md
+                div.column
+                  div.text-h6.q-mb-md
+                  q-btn.q-my-sm(
+										icon="settings"
+										v-model="mobileData"
+										label="Configurações"
+									)
+                  q-btn(
+										icon="login"
+										color="secondary"
+										label="Sair"
+										@click="logout"
+										v-close-popup
+									)
+                q-separator.q-mx-lg.horizontal.inset
+                div.column.items-center
+                  q-avatar(
+										size="72px"
+									)
+                    img(src="https://cdn.quasar.dev/img/avatar4.jpg")
+                  div.q-mt-md.q-mb-xs(
+										class="text-subtitle1"
+									) John Doe/div
     q-drawer(
       v-model="leftDrawerOpen"
       bordered

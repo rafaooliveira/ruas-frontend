@@ -67,10 +67,11 @@ module.exports = configure(function (ctx) {
 
     // Full list of options: https://v2.quasar.dev/quasar-cli/quasar-conf-js#Property%3A-devServer
     devServer: {
+			vueDevtools: true,
       https: false,
       port: 8080,
       open: true,
-	  proxy: {
+	  	proxy: {
         '/api': {
           target: 'http://localhost:3030',
           changeOrigin: true,

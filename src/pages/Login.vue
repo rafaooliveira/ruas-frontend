@@ -138,6 +138,7 @@ export default {
 					})
 				} catch (e) {
 					this.$q.notify({
+						position: 'top-right',
 						color: 'negative',
 						message: 'Erro ao fazer login'
 					})
