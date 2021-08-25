@@ -40,28 +40,27 @@ q-layout(view="lHh Lpr lFf")
             q-menu
               div.row.no-wrap.q-pa-md
                 div.column
-                  div.text-h6.q-mb-md
-                  q-btn.q-my-sm(
+                  div.text-h6 Configurações
+                  q-btn.q-my-md(
 										icon="settings"
 										v-model="mobileData"
-										label="Configurações"
+										label="Editar Perfil"
 									)
                   q-btn(
 										icon="login"
 										color="secondary"
 										label="Sair"
-										@click="logout"
-										v-close-popup
+										@click.prevent="logout()"
 									)
-                q-separator.q-mx-lg.horizontal.inset
+                q-separator.q-mx-md
                 div.column.items-center
                   q-avatar(
 										size="72px"
 									)
                     img(src="https://cdn.quasar.dev/img/avatar4.jpg")
-                  div.q-mt-md.q-mb-xs(
+                  div.q-my-lg(
 										class="text-subtitle1"
-									) John Doe/div
+									) {{ this.username }}
     q-drawer(
       v-model="leftDrawerOpen"
       bordered
@@ -106,7 +105,8 @@ export default {
     return {
       m: moment,
       leftDrawerOpen: false,
-      registers: []
+      registers: [],
+			username: ""
     }
   },
   methods: {
@@ -126,10 +126,33 @@ export default {
             break
         }
       })
-    }
+    },
+		logout () {
+			try {
+				localStorage.clear();
+				this.$router.push({
+					path: '/login'
+				})
+				this.$q.notify({
+					message: 'Nois se ve por aí'
+				})
+			} catch (e) {
+				this.$q.notify({
+					color: 'negative',
+					message: `Erro ao fazer logout ${e}`
+				})
+			}
+		},
+		async getName () {
+			String.prototype.capitalize = function() {
+				return this.charAt(0).toUpperCase() + this.substr(1);
+			}
+			localStorage.getItem('name') ? this.username = localStorage.getItem('name').capitalize() : this.username = ""
+		}
   },
   async mounted () {
     this.renderMenu()
+		await this.getName()
   }
 }
 </script>
