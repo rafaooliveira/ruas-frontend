@@ -1,8 +1,8 @@
 <template lang="pug">
 div
   div.row.window-height.justify-center
-    div.col-xl-3.offset-xl-8.col-lg-4.offset-lg-8.col-md-8.offset-md-8.col-sm-12.col-xs-12.self-center.q-pa-md
-      q-card.bodyLogin.shadow-10.q-pt-lg.q-pa-lg(
+    div.col-xl-3.offset-xl-8.col-lg-4.offset-lg-8.col-md-6.offset-md-6.col-sm-12.col-xs-12.self-center.q-pa-md
+      q-card.bodyLogin.shadow-10.q-pt-md.q-pa-md(
         style="border-radius: 25px;"
       )
         center
@@ -17,7 +17,7 @@ div
           p.q-py-sm(
             style="font-size: 25px; color: #FFF;"
           ) RUAS
-        q-input.q-py-lg(
+        q-input.q-py-md(
 					ref="email"
           @keypress.enter="login()"
           label="Login:"
@@ -31,7 +31,7 @@ div
             q-icon(
               name="person"
             )
-        q-input.q-pb-lg(
+        q-input.q-pb-md(
 					ref="password"
           @keypress.enter="login()"
           label="Senha:"
@@ -65,7 +65,7 @@ div
             :disable="disable"
             data-cy="login"
           )
-        center.q-py-sx
+        center.q-py-xs
           q-btn(
             @keyup.enter="esquece()"
             @click="esquece()"
@@ -76,7 +76,7 @@ div
             :disable="disable"
             data-cy="esqueci"
           )
-        center.q-py-lg
+        center.q-py-md
           div.row.row-inline.justify-center
             center
               img(
@@ -117,64 +117,37 @@ export default {
   },
   methods: {
     async login () {
-      this.loading = true
-      this.disable = true
-
 			if (this.$refs.email.validate() && this.$refs.password.validate()) {
+				this.loading = true
+      	this.disable = true
 				try {
-					const response = await this.$axios.post('/api/authentication',
-          {
+					const response = await this.$axios.post('/api/authentication', {
             strategy: 'local',
             email: this.email,
             password: this.password
           })
-					console.log("response", response)
-					// this.$q.notify({
-					// 	type: 'positive',
-					// 	message: `Welcome back, ${response.data.user.name}!`
-					// })
+					localStorage.setItem('token', response.data.accessToken);
+					localStorage.setItem('name', response.data.user.name);
+					this.$q.notify({
+						position: 'top-left',
+						type: 'positive',
+						message: `Cola com nóis, ${response.data.user.name}!`
+					})
 					this.$router.push({
 						path: '/home'
 					})
 				} catch (e) {
 					this.$q.notify({
 						position: 'top-right',
-						color: 'negative',
+						color: 'Tem nada Faltando',
 						message: 'Erro ao fazer login'
 					})
+				} finally {
+					this.loading = false
+					this.disable = false
 				}
 			}
-			this.loading = false
-			this.disable = false
 			
-    },
-		async submmit () {
-      try {
-        
-        this.$store.commit('kajero/updateLoggedToken', response.data.accessToken)
-        this.$store.commit('kajero/updateLoggedUser', response.data.user)
-        t
-      } catch (e) {
-        if (e.response.status === 401) {
-          if (e.response.data.message.toUpperCase() === 'INVALID LOGIN') {
-            this.$q.notify({
-              type: 'negative',
-              message: 'Invalid credentials! Try again!'
-            })
-            this.new_user_message = true
-          }
-          if (e.response.data.message.toUpperCase() === 'NOT VERIFIED') {
-            this.not_verified_message = true
-          }
-        } else {
-          this.$q.notify({
-            type: 'negative',
-            message: 'Ops, couldn\'t possible to complete request. Try again!'
-          })
-        }
-      } finally {
-        this.$q.loading.hide()
-      }
     }
   },
   async mounted () {
