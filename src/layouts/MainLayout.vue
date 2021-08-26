@@ -18,20 +18,28 @@ q-layout(view="lHh Lpr lFf")
 					v-if="this.$route.path === '/login' || this.$route.path === '/cadastro'"
 					round
 					icon="arrow_back"
-					:to="this.$route.path === '/cadastro' ? '/login' : '/'"
+					:to="this.$route.path === '/' ? '/login' : '/'"
         )
         q-toolbar-title() Arte de Rua
+
         q-btn(
-					v-if="this.$route.path === '/login'"
+					v-if="this.$route.path === '/login' || this.$route.path === '/'"
 					label="Cadastre-se"
           :to="'/cadastro'"
-					color="warning"
         )
+
+        q-btn(
+						v-if="this.$route.path === '/cadastro'"
+						label="Faça login"
+						:to="'/login'"
+					)
         div
           q-btn(
 						v-if="this.$route.path === '/'"
 						label="Login"
 						:to="'/login'"
+            color="white"
+            text-color="dark"
 					)
           q-btn(
 						v-if="this.$route.path === '/home'"
