@@ -28,18 +28,13 @@ q-layout(view="lHh Lpr lFf")
           :to="'/cadastro'"
         )
 
-        q-btn(
-						v-if="this.$route.path === '/cadastro'"
-						label="Faça login"
-						:to="'/login'"
-					)
         div
           q-btn(
-						v-if="this.$route.path === '/'"
-						label="Login"
+						v-if="this.$route.path === '/' || this.$route.path === '/cadastro'"
+						:label="this.$route.path === '/' ? 'Login' : 'Faça login'"
 						:to="'/login'"
-            color="white"
-            text-color="dark"
+            :color="this.$route.path === '/' ? 'white' : 'dark'"
+            :text-color="this.$route.path === '/' ? 'dark' : 'white'"
 					)
           q-btn(
 						v-if="this.$route.path === '/home'"
