@@ -18,8 +18,6 @@ export default {
   },
   data () {
     return {
-      records: {
-      },
       loadingAdd: false,
       btnDisabled: false
     }
