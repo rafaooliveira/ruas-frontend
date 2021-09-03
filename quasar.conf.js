@@ -24,6 +24,8 @@ module.exports = configure(function (ctx) {
     boot: [
       'i18n',
       'axios',
+			'moment',
+			'leaflet'
     ],
 
     // https://v2.quasar.dev/quasar-cli/quasar-conf-js#Property%3A-css
@@ -48,6 +50,9 @@ module.exports = configure(function (ctx) {
     // Full list of options: https://v2.quasar.dev/quasar-cli/quasar-conf-js#Property%3A-build
     build: {
       vueRouterMode: 'hash', // available values: 'hash', 'history'
+			uglifyOptions: {
+        compress: { drop_console: true }
+      },
       chainWebpack (chain) {
         chain.module.rule('pug')
           .test(/\.pug$/)
@@ -67,7 +72,7 @@ module.exports = configure(function (ctx) {
 
     // Full list of options: https://v2.quasar.dev/quasar-cli/quasar-conf-js#Property%3A-devServer
     devServer: {
-			vueDevtools: true,
+			vueDevtools: false,
       https: false,
       port: 8080,
       open: true,

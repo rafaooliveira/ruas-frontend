@@ -1,6 +1,6 @@
 <template lang="pug">
-div
-	q-input.col-xl-3.col-lg-4.col-md-6.col-sm-6.col-xs-12(
+div.row
+	q-input.col-xl-12.col-lg-12.col-md-12.col-sm-12.col-xs-12(
 		v-model="vulgoLocal"
 		filled
 		required
@@ -8,14 +8,15 @@ div
 		label="Vulgo"
 		ref="vulgo"
 	)
-	q-input.col-xl-3.col-lg-4.col-md-6.col-sm-6.col-xs-12(
+	q-input.col-xl-12.col-lg-12.col-md-12.col-sm-12.col-xs-12( 
 		v-model="avaliacaoLocal"
 		filled
 		required
 		:rules="[val => !!val || msgCampoObr]"
 		label="Avaliação"
 		ref="avaliacao"
-		disabled
+		v-show="edit"
+		disable
 	)
 </template>
 
@@ -36,13 +37,13 @@ export default {
 	data () {
 		return {
 			vulgoLocal: '',
-			avaliacaoLocal: 0
+			avaliacaoLocal: 0,
+			edit: false
 		}
 	},
 	created () {
 		this.vulgoLocal = this.vulgo
 		this.avaliacaoLocal = this.avaliacao
-		console.log(this.vulgoLocal, this.avaliacaoLocal)
 	},
 	watch: {
 		vulgoLocal(val) {
