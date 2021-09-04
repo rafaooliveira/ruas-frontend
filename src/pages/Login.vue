@@ -129,8 +129,8 @@ export default {
 					localStorage.setItem('token', response.data.accessToken);
 					localStorage.setItem('name', response.data.user.name);
 					this.$q.notify({
-						position: 'top-left',
-						type: 'positive',
+						position: 'top-right',
+						color: 'positive',
 						message: `Cola com nóis, ${response.data.user.name}!`
 					})
 					this.$router.push({
@@ -139,7 +139,7 @@ export default {
 				} catch (e) {
 					this.$q.notify({
 						position: 'top-right',
-						color: 'Tem nada Faltando',
+						color: 'negative',
 						message: 'Erro ao fazer login'
 					})
 				} finally {

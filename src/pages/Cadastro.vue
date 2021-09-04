@@ -99,18 +99,6 @@ div.q-pa-xl
 							required
 							label="Tipo de Usuário"
 						)
-            Artistas.col-xl-3.col-lg-4.col-md-6.col-sm-6.col-xs-12(
-							v-if="register.tipoUsuario === 'artista'"
-							:vulgo="vulgo"
-							:avaliacao="avaliacao"
-							@avaliacaoUpdate="avaliacaoUpdate"
-							@vulgoUpdate="vulgoUpdate"
-						)
-            Promotores.col-xl-3.col-lg-4.col-md-6.col-sm-6.col-xs-12(
-							v-if="register.tipoUsuario === 'promotor'"
-							:agencia="agencia"
-							@agenciaUpdate="agenciaUpdate"
-						)
             q-toggle.col-xl-12.col-lg-12.col-md-12.col-sm-12.col-xs-12(
 							v-model="register.authGoogle"
 							color="secondary"
@@ -132,15 +120,37 @@ div.q-pa-xl
 </template>
 
 <script>
-import Artistas from "components/TiposDeUsuario/Artistas.vue"
-import Promotores from "components/TiposDeUsuario/Promotores.vue"
+//-  Deve ter uma tela de cadastro de promotor e não na tela de cadastro 
+//- Artistas.col-xl-3.col-lg-4.col-md-6.col-sm-6.col-xs-12(
+//- 	v-if="register.tipoUsuario === 'artista'"
+//- 	:vulgo="vulgo"
+//- 	:avaliacao="avaliacao"
+//- 	@avaliacaoUpdate="avaliacaoUpdate"
+//- 	@vulgoUpdate="vulgoUpdate"
+//- )
+//- Promotores.col-xl-3.col-lg-4.col-md-6.col-sm-6.col-xs-12(
+//- 	v-if="register.tipoUsuario === 'promotor'"
+//- 	:agencia="agencia"
+//- 	@agenciaUpdate="agenciaUpdate"
+//- )
+// import Artistas from "components/TiposDeUsuario/Artistas.vue"
+// import Promotores from "components/TiposDeUsuario/Promotores.vue"
+// components:{
+// 	Artistas,
+// 	Promotores
+// },
+// avaliacaoUpdate (avaliacao) {
+// 	this.avaliacao = avaliacao
+// },
+// vulgoUpdate (vulgo) {
+// 	this.vulgo = vulgo
+// },
+// agenciaUpdate (agencia) {
+// 	this.agencia = agencia
+// }
 
 export default {
 	name: "Cadastro",
-	components:{
-		Artistas,
-		Promotores
-	},
 	data () {
 		return {
 			agencia: '',
@@ -149,7 +159,6 @@ export default {
 			msgCampoObr: "Faltou aqui ó",
 			isPwd: true,
       disable: false,
-			loading: false,
 			register: {
 				name: '',
 				email: '',
@@ -181,15 +190,11 @@ export default {
 	},
 	methods: {
 		async registerUser () {
-			this.loading = true
+			this.$q.loading.show()
 			this.disable = true
-			console.log(this.validateFields())
 			if (this.validateFields()) {
-				if (this.agencia) {
-					const params = Object.assign({}, this.register)
-					params.agencia = this.agencia
 					try {
-						const newUser = await this.$axios.post('api/users', params)
+						const newUser = await this.$axios.post('api/users', this.register)
 						this.$q.notify({
 							color:'positive',
 							message:'Cadastro realizado com sucesso pai'
@@ -199,34 +204,32 @@ export default {
 						})
 						return newUser
 					} catch (e) {
-						this.$q.notify({
-							color:'negative',
-							message:'Erro ao cadastrar novo usuário parça'
-						})
+						if (e.response.status === 400) {
+								if (e.response.data.errors && e.response.data.errors.length > 0 && e.response.data.errors[0].message.toUpperCase() === 'EMAIL MUST BE UNIQUE') {
+									this.$q.notify({
+										type: 'warning',
+										message: 'Esse e-mail já está registrado manin'
+									})
+								}
+						} else {
+							this.$q.notify({
+								type: 'negative',
+								message: 'Erro ao cadastrar man, tente mais tarde"'
+							})
+						}
+					} finally {
+						this.$q.loading.hide()
 					}
-				} else {
-					const params = Object.assign({}, this.register)
-					params.vulgo = this.vulgo
-					params.avaliacao = this.avaliacao
-					return params
-				}
 			} else {
 				this.$q.notify({
 					color:'warning',
 					message:'Falta preencher algum campo meu bom'
 				})
 			}
-			this.loading = false
+			this.loading.hide()
 			this.disable = false
 		},
 		validateFields() {
-			console.log("nome", this.$refs.nome.validate())
-			console.log("idade", this.$refs.idade.validate())
-			console.log("cpf", this.$refs.cpfCnpj.validate())
-			console.log("email", this.$refs.email.validate())
-			console.log("password", this.$refs.password.validate())
-			console.log("dtNascimento", this.$refs.dtNascimento.validate())
-			console.log("tpUser", this.$refs.tipoUsuario.validate())
 			return this.$refs.nome.validate() &&
 			this.$refs.idade.validate() &&
 			this.$refs.cpfCnpj.validate() &&
@@ -234,15 +237,6 @@ export default {
 			this.$refs.password.validate() &&
 			this.$refs.dtNascimento.validate() &&
 			this.$refs.tipoUsuario.validate()
-		},
-		avaliacaoUpdate (avaliacao) {
-			this.avaliacao = avaliacao
-		},
-		vulgoUpdate (vulgo) {
-			this.vulgo = vulgo
-		},
-		agenciaUpdate (agencia) {
-			this.agencia = agencia
 		}
 	}
 }
