@@ -24,6 +24,7 @@ q-layout(view="lHh Lpr lFf")
 
         q-btn(
 					v-if="this.$route.path === '/login' || this.$route.path === '/'"
+					:class="this.$route.path === '/' ? 'q-mx-md' : ''"
 					label="Cadastre-se"
           :to="'/cadastro'"
         )
