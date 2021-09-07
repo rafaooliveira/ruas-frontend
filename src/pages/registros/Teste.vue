@@ -7,7 +7,7 @@ q-page.layout-padding.relative-center
 		q-input(
 			label="Local"
 			filled
-			v-model="local"
+			v-model="register.local"
 		)
 		q-btn(
 			label="Ver Local"
@@ -23,12 +23,14 @@ export default {
   name: 'Teste',
   data () {
     return {
-      local: ''
+			register: {
+				local: ''
+			}
     }
   },
   watch: {
-    local: function (val) {
-      console.log('valor input local', this.local)
+    "register.local": function (val) {
+      console.log('valor input local', this.register.local)
     }
   },
   methods: {

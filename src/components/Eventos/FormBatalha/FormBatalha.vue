@@ -69,13 +69,6 @@ div.q-pa-lg
 
 <script>
 import { Notify } from "quasar";
-import moment from "moment";
-Notify.setDefaults({
-  position: "top-right",
-  timeout: 1000,
-  actions: [{ icon: "close", color: "white" }],
-});
-moment.locale("pt-BR");
 export default {
   name: "Rima",
   data() {
@@ -83,7 +76,7 @@ export default {
       msgCampoObr: "Campo obrigatório",
       data: [],
       premiacoes: ["Sim", "Não"],
-      diaEvento: moment.weekdays(),
+      diaEvento: [],
       register: {
         nome: "",
         dia: "",
@@ -108,25 +101,25 @@ export default {
         this.$refs.name.resetValidation();
       }, 10);
     },
-    buscarCep() {
-      var cep = this.register.cep.replace(/-/, "");
-      this.$viaCep
-        .buscarCep(cep)
-        .then((obj) => {
-          this.register.localidade = obj.localidade;
-          this.register.rua = obj.logradouro;
-          this.register.uf = obj.uf;
-          this.register.bairro = obj.bairro;
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+    async buscarCep() {
+      var cep = this.register.cep.replace('-', "");
+      const url = `https://viacep.com.br/ws/${cep}/json/?callback=`
+			try {
+				const res = await this.$axios.get(url)
+				this.register.localidade = res.data.localidade;
+				this.register.rua = res.data.logradouro;
+				this.register.uf = res.data.uf;
+				this.register.bairro = res.data.bairro;
+			} catch {
+				this.$q.notify({
+					color: 'negative',
+					message: 'Erro ao consultar CEP'
+				})
+			}
     },
   },
-  mounted() {
-    // this.$root.$on("carregarCadastroBatalha", () => {
-    //   console.log("consigo manipular por aqui");
-    // });
-  },
+	created () {
+		this.diaEvento = this.$moment.weekdays()
+	}
 };
 </script>

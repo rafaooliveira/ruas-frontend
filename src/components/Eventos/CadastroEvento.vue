@@ -9,6 +9,9 @@ div.q-pa-xl
 						round
 						:to="'/home'"
 					)
+					h6(
+						class="text-h6 text-center"
+					) Cadastro de {{ tipo }}
 					q-separator
 					q-select(
 						v-model="tipo"

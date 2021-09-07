@@ -18,8 +18,6 @@ export default {
   },
   data () {
     return {
-      records: {
-      },
       loadingAdd: false,
       btnDisabled: false
     }
@@ -28,7 +26,7 @@ export default {
   methods: {
     validate () {
       console.log('formdata MESTREE', this)
-      // return this.$parent.$parent.$parent.$refs.name.validate()
+      return this.$parent.$parent.$parent.$refs.name.validate()
     },
 
     loading (load) {
