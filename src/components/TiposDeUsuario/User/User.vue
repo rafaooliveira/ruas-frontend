@@ -23,8 +23,9 @@ div.row.q-col-gutter-sm
 		required
 		:rules="[val => !!val || msgCampoObr]"
 		label="CPF/CNPJ"
-		:mask="'###.###.###-##' || '##.###.###/####-##'"
 		ref="cpfCnpj"
+		:mask="'###.###.###-##' || '##.###.###/####-##'"
+		@change="validaCpf"
 	)
 	q-input.col-xl-3.col-lg-4.col-md-6.col-sm-6.col-xs-12(
 		v-model="register.email"
@@ -91,6 +92,34 @@ div.row.q-col-gutter-sm
 		required
 		label="Tipo de Usuário"
 	)
+	q-input.col-xl-3.col-lg-4.col-md-6.col-sm-6.col-xs-12(
+		v-show="register.tipoUsuario === 'promotor'"
+		v-model="register.agencia"
+		filled
+		required
+		:rules="[val => !!val || msgCampoObr]"
+		label="Agência"
+		ref="agencia"
+	)
+	q-input.col-xl-3.col-lg-4.col-md-6.col-sm-6.col-xs-12(
+		v-show="register.tipoUsuario === 'artista'"
+		v-model="register.vulgo"
+		filled
+		required
+		:rules="[val => !!val || msgCampoObr]"
+		label="Vulgo"
+		ref="vulgo"
+	)
+	q-input.col-xl-3.col-lg-4.col-md-6.col-sm-6.col-xs-12(
+		v-show="register.tipoUsuario === 'artista'"
+		disable
+		v-model.number="register.avaliacao"
+		filled
+		required
+		:rules="[val => !!val || msgCampoObr]"
+		label="Avaliação"
+		ref="avaliacao"
+	)
 	q-toggle.col-xl-12.col-lg-12.col-md-12.col-sm-12.col-xs-12(
 		v-model="register.authGoogle"
 		color="secondary"
@@ -106,6 +135,7 @@ div.row.q-col-gutter-sm
 
 <script>
 import AddUser from "./AddUser.vue"
+import FormatUtils from "../../../helpers/FormatUtils"
 export default {
 	name: 'User',
 	components: {
@@ -121,7 +151,10 @@ export default {
 				password: '',
 				dtNascimento: '',
 				tipoUsuario: '',
-				authGoogle: false
+				authGoogle: false,
+				agencia: '',
+				vulgo: '',
+				avaliacao: 0
 			},
 			isPwd: true,
 			msgCampoObr: "Faltou aqui ó",
@@ -142,6 +175,19 @@ export default {
         monthsShort: 'Jan_Fev_Mar_Abr_Mai_Jun_Jul_Ago_Set_Out_Nov_Dez'.split('_'),
         firstDayOfWeek: 1
       }
+		}
+	},
+	watch: {},
+	methods: {
+		validaCpf () {
+			// const cpf = FormatUtils.isCpf(this.register.cpfCnpj.replaceAll('.', '').replace('-', ''))
+			// if (!cpf) {
+			// 	this.$q.notify({
+			// 		message: 'cpf inválido',
+			// 		color: 'negative'
+			// 	})
+			// 	this.register.cpfCnpj = ''
+			// }
 		}
 	}
 }
