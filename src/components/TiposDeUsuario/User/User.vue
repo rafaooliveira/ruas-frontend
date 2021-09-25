@@ -179,21 +179,19 @@ export default {
       }
 		}
 	},
-	// computed: {
-  // 	mask: function () {
-	// 		return this.register.cpfCnpj.length >= 14 ? '##.###.###/####-##' : '###.###.###-##'
-	// 	}
-	// },
 	methods: {
 		validaCpf () {
-			// const cpf = FormatUtils.isCpf(this.register.cpfCnpj.replaceAll('.', '').replace('-', ''))
-			// if (!cpf) {
-			// 	this.$q.notify({
-			// 		message: 'cpf inválido',
-			// 		color: 'negative'
-			// 	})
-			// 	this.register.cpfCnpj = ''
-			// }
+			let tipoDoc = {}
+			let cpf = FormatUtils.isCpf(this.register.cpfCnpj.replaceAll('.', '').replace('-', ''))
+			let cnpj = FormatUtils.isCpf(this.register.cpfCnpj.replaceAll('.', '').replace('-', '').replace('/', ''))
+			this.register.cpfCnpj.length === 14 ? tipoDoc = { tipo: 'CPF', valido: cpf } : tipoDoc = { tipo: 'CNPJ', valido: cnpj }
+			if (!tipoDoc.valido) {
+				this.$q.notify({
+					message: `${tipoDoc.tipo} inválido`,
+					color: 'negative'
+				})
+				this.register.cpfCnpj = ''
+			}
 		}
 	}
 }
