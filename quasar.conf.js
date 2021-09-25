@@ -105,11 +105,11 @@ module.exports = configure(function (ctx) {
 
       // Quasar plugins
       plugins: [
-		'Loading',
-		'LocalStorage',
-		'SessionStorage',
-		'Notify'
-	  ]
+				'Loading',
+				'LocalStorage',
+				'SessionStorage',
+				'Notify'
+	  	]
     },
 
     // animations: 'all', // --- includes all animations

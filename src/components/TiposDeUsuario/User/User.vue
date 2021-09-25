@@ -24,7 +24,7 @@ div.row.q-col-gutter-sm
 		:rules="[val => !!val || msgCampoObr]"
 		label="CPF/CNPJ"
 		ref="cpfCnpj"
-		:mask="'###.###.###-##' || '##.###.###/####-##'"
+    v-mask="['###.###.###-##', '##.###.###/####-##']"
 		@change="validaCpf"
 	)
 	q-input.col-xl-3.col-lg-4.col-md-6.col-sm-6.col-xs-12(
@@ -136,11 +136,13 @@ div.row.q-col-gutter-sm
 <script>
 import AddUser from "./AddUser.vue"
 import FormatUtils from "../../../helpers/FormatUtils"
+import {mask} from 'vue-the-mask'
 export default {
 	name: 'User',
 	components: {
 		AddUser
 	},
+	directives: {mask},
 	data () {
 		return {
 			register: {
@@ -177,7 +179,11 @@ export default {
       }
 		}
 	},
-	watch: {},
+	// computed: {
+  // 	mask: function () {
+	// 		return this.register.cpfCnpj.length >= 14 ? '##.###.###/####-##' : '###.###.###-##'
+	// 	}
+	// },
 	methods: {
 		validaCpf () {
 			// const cpf = FormatUtils.isCpf(this.register.cpfCnpj.replaceAll('.', '').replace('-', ''))
