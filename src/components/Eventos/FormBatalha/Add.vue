@@ -5,7 +5,7 @@ div
 		:disable="btnDisabled"
 		color="secondary"
 		:loading="loadingAdd"
-		@click="validate()"
+		@click="cadastrar()"
 	)
 </template>
 
@@ -13,7 +13,6 @@ div
 
 export default {
   props: {
-    tipo: { type: [String], required: true },
     formData: { type: [Object, String], required: true }
   },
   data () {
@@ -25,8 +24,7 @@ export default {
 
   methods: {
     validate () {
-      console.log('formdata MESTREE', this)
-      return this.$parent.$parent.$parent.$refs.name.validate()
+      console.log(this.$parent.$refs)
     },
 
     loading (load) {
@@ -37,36 +35,37 @@ export default {
         this.btnDisabled = false
       }
     },
-    resetValidation () {
-      this.$parent.$parent.$parent.$refs.name.resetValidation()
-    },
+    // resetValidation () {
+    //   this.$parent.$parent.$parent.$refs.name.resetValidation()
+    // },
     async cadastrar () {
-      if (this.validate()) {
-        this.loading(true)
-        try {
-          await this.$axios.post(`../api/${this.tipo}`, this.formData)
-          this.$q.notify({
-            color: 'positive',
-            message: 'Cadastrado com sucesso'
-          })
-          this.$emit('loadBatalha')
-          this.resetValidation()
-          this.loading(false)
-        } catch (e) {
-          this.$q.notify({
-            color: 'negative',
-            message: 'Erro ao cadastrar'
-          })
-        } finally {
-          this.loading(false)
-          this.$emit('loadBatalha')
-        }
-      } else {
-        this.$q.notify({
-          color: 'warning',
-          message: 'Preencher campos obrigatórios'
-        })
-      }
+			this.validate()
+			console.log('events', this.formData)
+      // if (this.validate()) {
+      //   this.loading(true)
+      //   try {
+      //     await this.$axios.post(`../api/events`, this.formData)
+      //     this.$q.notify({
+      //       color: 'positive',
+      //       message: 'Cadastrado com sucesso'
+      //     })
+      //     this.resetValidation()
+      //     this.loading(false)
+      //   } catch (e) {
+			// 		console.log(e)
+      //     this.$q.notify({
+      //       color: 'negative',
+      //       message: 'Erro ao cadastrar'
+      //     })
+      //   } finally {
+      //     this.loading(false)
+      //   }
+      // } else {
+      //   this.$q.notify({
+      //     color: 'warning',
+      //     message: 'Preencher campos obrigatórios'
+      //   })
+      // }
     }
   }
 }
