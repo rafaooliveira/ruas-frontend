@@ -14,12 +14,10 @@ div.q-pa-xl
 					q-separator
 					RIMA
 					
-		div.row
-			div.col-xl-12.col-lg-12.col-md-12.col-sm-12.col-xs-12
-				q-card
-					q-card-section
-						//- Map
-		//- //- vue-tournament-bracket-generator(:bracket-size="16")
+		div.col-xl-8.col-lg-8.col-md-8.col-sm-12.col-xs-12
+			q-card
+				q-card-section
+					Map
 </template>
 
 <script>
@@ -35,5 +33,8 @@ export default {
   data () {
     return {}
   },
+	mounted () {
+		console.log(this.$route)
+	}
 }
 </script>
